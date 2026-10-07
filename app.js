@@ -168,7 +168,11 @@ $('#fDel').onclick=async()=>{const id=editing;$('#sheet').classList.remove('on')
 $('#fCancel').onclick=()=>$('#sheet').classList.remove('on');
 $('#bAdd').onclick=()=>openForm(null,{kaos:'vendor',masuk:'kaos',keluar:'umum'}[cur]||null);
 document.addEventListener('click',e=>{
-  const t=e.target.closest('[data-add],[data-edit],[data-del],[data-chip],[data-f],[data-go],[data-nav],[data-month]');if(!t)return;
+  const t=e.target.closest('[data-add],[data-edit],[data-del],[data-chip],[data-f],[data-go],[data-nav],[data-month],[data-ex],[data-cs],[data-ce],[data-cx]');if(!t)return;
+  if(t.dataset.ex){$('#chatIn').value=t.dataset.ex;$('#chatIn').focus();return}
+  if(t.dataset.cs){chatSave(t.dataset.cs,t);return}
+  if(t.dataset.cx){delete pend[t.dataset.cx];t.closest('.bub').textContent='Dibatalkan.';return}
+  if(t.dataset.ce){const d=pend[t.dataset.ce];if(d){openForm(d);$('#fDel').classList.add('hide');$('#fTitle').textContent='Periksa catatan';t.closest('.bub').textContent='Dibuka di form.'}return}
   if(t.dataset.month){setMonth(t.dataset.month);return}
   if(t.dataset.chip!==undefined){$('#fKet').value=t.dataset.chip;return}
   if(t.dataset.f!==undefined){filt=t.dataset.f;document.querySelectorAll('[data-f]').forEach(b=>b.classList.toggle('on',b===t));render();return}
@@ -197,6 +201,58 @@ async function hapus(id){
     toast('Dihapus');
   }catch(e){toast('Gagal hapus: '+(e.code||e.message))}
 }
+
+// ── CATAT CEPAT (CHATBOT ATURAN) ───────
+const KW={
+  vendor:/\b(vendor|konveksi|sablon|pelunasan|dp)\b/i,
+  kaos_lain:/\b(stiker|sticker|label|plastik|packing|hangtag|tag|kardus|polybag|lakban)\b/i,
+  umum:/\b(iklan|ads|follower|followers|website|web|domain|hosting|ongkir|admin)\b/i,
+  masuk:/\b(masuk|terima|dapat|dapet|jual|terjual|laku|pemasukan|income|bayar dari)\b/i,
+  kaos:/\b(kaos|jual|terjual|laku)\b/i
+};
+function parseChat(raw){
+  let t=raw.trim(); if(!t)return null;
+  let plus=/^\+/.test(t); t=t.replace(/^[+\-]\s*/,'');
+  // qty
+  let qty=0; const mq=t.match(/(\d+)\s*(pcs|pc|biji|buah)\b/i); if(mq){qty=+mq[1];t=t.replace(mq[0],' ')}
+  // nominal
+  const re=/(\d+(?:[.,]\d+)*)\s*(jt|juta|rb|ribu|k)?(?![a-z])/gi; let best=null,m;
+  while((m=re.exec(t))){const suf=(m[2]||'').toLowerCase();let n=m[1],v;
+    if(suf){v=parseFloat(n.replace(',','.'))*(/^(jt|juta)$/.test(suf)?1e6:1e3)}
+    else v=parseFloat(n.replace(/[.,]/g,''));
+    const sc=(suf?1e12:0)+v; if(!best||sc>best.sc)best={sc,v:Math.round(v),tok:m[0]};}
+  if(!best||!(best.v>0))return {err:'Nominalnya belum ketemu. Coba tulis seperti: stiker 30k'};
+  let ket=t.replace(best.tok,' ');
+  // tanggal
+  let d=new Date(); const mt=ket.match(/\b(?:tgl|tanggal)\s*(\d{1,2})\b/i);
+  if(/\bkemarin\b/i.test(ket)){d.setDate(d.getDate()-1);ket=ket.replace(/\bkemarin\b/i,' ')}
+  else if(mt){const [y,mo]=bulan.split('-').map(Number);d=new Date(y,mo-1,Math.min(31,+mt[1]));ket=ket.replace(mt[0],' ')}
+  const tanggal=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  let tipe='keluar',grup='umum';
+  if(plus||KW.masuk.test(t)){tipe='masuk';grup=(KW.kaos.test(t)||qty)?'kaos':'lain'}
+  else if(KW.vendor.test(t))grup='vendor';
+  else if(KW.kaos_lain.test(t))grup='kaos_lain';
+  else if(KW.umum.test(t))grup='umum';
+  ket=ket.replace(/\b(beli|bayar|untuk|buat|tadi|hari ini|masuk|terima|dapat|dapet|rp)\b/gi,' ').replace(/\s+/g,' ').trim();
+  if(!ket)ket=GRUP_LABEL[grup];
+  ket=ket.charAt(0).toUpperCase()+ket.slice(1);
+  return {tipe,grup,tanggal,bulan:tanggal.slice(0,7),ket,nominal:best.v,qty:(tipe==='masuk'&&grup==='kaos')?qty:0,sumber:'chat'};
+}
+const pend={};let pid=0;
+function bub(cls,html){const l=$('#chatLog');l.insertAdjacentHTML('beforeend',`<div class="bub ${cls}">${html}</div>`);while(l.children.length>14)l.firstChild.remove();l.scrollTop=l.scrollHeight;return l.lastElementChild}
+function chatInit(){$('#chatLog').innerHTML='';bub('bot','Halo! Ketik catatan singkat, contoh: <b>stiker 30k</b> atau <b>jual kaos 3 pcs 270k</b>. Saya tebak kelompoknya, kamu tinggal konfirmasi.')}
+$('#chatForm').onsubmit=e=>{e.preventDefault();const v=$('#chatIn').value.trim();if(!v)return;
+  bub('me',esc(v));$('#chatIn').value='';
+  const r=parseChat(v);
+  if(!r||r.err){bub('bot',esc(r?.err||'Tulis dulu catatannya.'));return}
+  const id=++pid;pend[id]=r;const m=r.tipe==='masuk';
+  bub('bot',`<div class="pv"><span>${esc(r.ket)}</span><b class="${m?'g':'r'}">${m?'+':'-'}${rp(r.nominal)}</b><span class="tag">${m?'Pemasukan':'Pengeluaran'} · ${GRUP_LABEL[r.grup]}${r.qty?` · ${r.qty} pcs`:''} · ${tgl(r.tanggal)}</span></div><div class="acts"><button class="pri" data-cs="${id}">Simpan</button><button data-ce="${id}">Ubah</button><button data-cx="${id}">Batal</button></div>`)};
+async function chatSave(id,btn){const d=pend[id];if(!d)return;
+  try{await addDoc(collection(kDb,'transaksi'),{...d,createdAt:Date.now()});delete pend[id];
+    btn.closest('.bub').innerHTML=`✓ Tersimpan: <b>${esc(d.ket)}</b> ${d.tipe==='masuk'?'+':'-'}${rp(d.nominal)}`;
+    if(d.bulan!==bulan)setMonth(d.bulan);toast('Tersimpan')}
+  catch(x){toast('Gagal simpan: '+(x.code||x.message))}}
+chatInit();
 
 // ── SEMBUNYIKAN NOMINAL ───────────────
 const eyeSet=h=>{document.body.classList.toggle('hide-bal',h);const u=$('#bEye use');if(u)u.setAttribute('href',h?'#i-eyeoff':'#i-eye');try{localStorage.setItem('hideBal',h?'1':'')}catch{}};

@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=4">
+<link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -86,6 +86,14 @@
         <div class="use-lbl"><span id="sPct"></span><span>Sisa <b id="sSisa"></b></span></div>
       </div>
 
+
+      <div class="card chat">
+        <div class="ch">⚽ Catat cepat</div>
+        <div id="chatLog" aria-live="polite"></div>
+        <form id="chatForm" class="chatbar"><input id="chatIn" placeholder='Ketik: stiker 30k' autocomplete="off" enterkeyhint="send"><button class="pri" type="submit">Kirim</button></form>
+        <div class="chips" id="chatEx"><button type="button" data-ex="stiker 30k">stiker 30k</button><button type="button" data-ex="iklan ig 150rb">iklan ig 150rb</button><button type="button" data-ex="jual kaos 3 pcs 270k">jual kaos 3 pcs 270k</button><button type="button" data-ex="dp vendor 1,5jt">dp vendor 1,5jt</button></div>
+      </div>
+
       <h2>Statistik</h2>
       <div class="charts">
         <div class="card wide">
@@ -159,6 +167,6 @@
   <div class="row"><button type="button" class="danger hide" id="fDel">Hapus</button><button type="button" id="fCancel">Batal</button><button class="pri" type="submit">Simpan</button></div>
 </form></div>
 
-<script type="module" src="app.js?v=4"></script>
+<script type="module" src="app.js?v=5"></script>
 </body>
 </html>
