@@ -4,36 +4,70 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0d120f">
 <title>Keuangan | FvcktheRules</title>
 <style>
-:root{--bg:#0b0b0b;--card:#161616;--line:#262626;--tx:#f2f2f2;--mut:#8a8a8a;--green:#2ee59d;--red:#ff5d5d;--blue:#5aa9ff}
+:root{--bg:#0d120f;--pan:#151c17;--line:#243029;--tx:#eef2ea;--mut:#8a998f;--green:#2ee59d;--red:#ff6b5e;--blue:#6cb2ff}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.4 system-ui,sans-serif;padding-bottom:90px}
-.wrap{max-width:560px;margin:auto;padding:14px}
-h1{font-size:18px;margin:0}.mut{color:var(--mut);font-size:12px}
-.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px}
-.big{font-size:26px;font-weight:700}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.g{color:var(--green)}.r{color:var(--red)}.b{color:var(--blue)}
-button,select,input{font:inherit;color:var(--tx);background:#1f1f1f;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
-button{cursor:pointer}button.pri{background:var(--green);color:#000;border:0;font-weight:700}
-button.sm{padding:6px 10px;font-size:13px}
+html{scroll-padding-top:120px}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;font-variant-numeric:tabular-nums;padding-bottom:110px}
+.wrap{max-width:560px;margin:auto;padding:0 14px}
+h1{font-size:19px;margin:0;font-weight:800;letter-spacing:-.01em}
+.mut{color:var(--mut);font-size:13px}.g{color:var(--green)}.r{color:var(--red)}.b{color:var(--blue)}.hide{display:none!important}
+button,select,input{font:inherit;color:var(--tx);background:#1b241e;border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-height:46px}
+button{cursor:pointer;transition:transform .08s,background .15s}button:active{transform:scale(.97)}
+button.pri{background:var(--green);color:#04130b;border:0;font-weight:800}
+button.danger{color:var(--red);border-color:#4a2a27;background:transparent}
+button.sm{min-height:40px;padding:6px 14px;font-size:14px}
+:focus-visible{outline:2px solid var(--green);outline-offset:2px}
 .row{display:flex;gap:8px;align-items:center}.row>*{flex:1}
-.mon{display:flex;gap:8px;margin-bottom:10px}.mon input{flex:2;text-align:center}.mon button{flex:0 0 46px}
-.tabs{display:flex;gap:6px;margin:12px 0}.tabs button{flex:1}.tabs .on{background:var(--tx);color:#000;font-weight:700}
-.item{display:flex;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
-.item:last-child{border:0}.item .n{font-weight:700;white-space:nowrap}
-.tag{font-size:10px;border:1px solid var(--line);border-radius:6px;padding:1px 6px;color:var(--mut);margin-left:4px}
-.acts{display:flex;gap:6px;margin-top:6px}
-.fab{position:fixed;right:16px;bottom:18px;border-radius:50px;padding:14px 20px;box-shadow:0 4px 20px #000}
-#sheet{position:fixed;inset:0;background:#000a;display:none;align-items:flex-end;z-index:9}
+.tr{display:flex;gap:6px;align-items:center}
+.ic{width:40px;min-height:40px;padding:0;border-radius:50%;font-size:18px}
+.spin{animation:sp 1s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+.bar{position:sticky;top:0;z-index:5;margin:0 -14px;padding:12px 14px 6px;background:#0d120fee;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.mon{display:flex;align-items:center;gap:6px;margin-top:8px}
+.mon input{flex:1;text-align:center;font-weight:700;font-size:17px;background:transparent;border-color:transparent}
+.mon button{width:44px;padding:0;background:transparent}
+.score{position:relative;overflow:hidden;margin:14px 0 10px;border-radius:22px;background:linear-gradient(#143222,#0f2619);border:1px solid #1f4a33;padding:18px 16px 14px}
+.score:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:#2ee59d2b}
+.score:after{content:"";position:absolute;left:50%;top:44%;width:110px;height:110px;margin:-55px;border:1px solid #2ee59d2b;border-radius:50%}
+.score>*{position:relative;z-index:1}
+.half{display:grid;grid-template-columns:1fr 1fr}.half>div{padding:0 8px}.half>div+div{text-align:right}
+.num{font-size:27px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+.use{height:6px;border-radius:6px;background:#0008;margin-top:16px;overflow:hidden}
+.use i{display:block;height:100%;width:0;background:var(--red);border-radius:6px;transition:width .4s}
+.tot{margin-top:14px;padding-top:12px;border-top:1px solid #2ee59d2b;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.tot b{font-size:21px;letter-spacing:-.01em}
+.brk .line{display:flex;justify-content:space-between;padding:11px 4px;border-bottom:1px solid var(--line)}
+.tabs,.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:4px;padding:4px;background:#101611;border:1px solid var(--line);border-radius:14px;margin:14px 0 4px}
+.tabs button,.seg button{border:0;background:transparent;min-height:42px;color:var(--mut);font-weight:700}
+.tabs .on,.seg .on{background:var(--tx);color:#07100a}
+.seg{margin:0}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chips button{min-height:36px;padding:4px 14px;font-size:14px;border-radius:20px}
+.chips .on{background:var(--tx);color:#07100a;border-color:var(--tx)}
+.day{margin:18px 0 2px;color:var(--mut);font-size:13px;font-weight:700}
+.item{display:flex;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px solid var(--line);cursor:pointer}
+.item:active{background:#ffffff08}
+.dot{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;flex:none;font-weight:800}
+.dot.in{background:#2ee59d1f;color:var(--green)}.dot.out{background:#ff6b5e1f;color:var(--red)}
+.item .t{flex:1;min-width:0}.item .t>div:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tag{font-size:12px;color:var(--mut)}.n{font-weight:800;white-space:nowrap}
+.empty{padding:34px 10px;text-align:center;color:var(--mut)}
+.card{background:var(--pan);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.big{font-size:26px;font-weight:800;letter-spacing:-.02em}
+.fab{position:fixed;right:16px;bottom:calc(18px + env(safe-area-inset-bottom));border-radius:50px;padding:0 24px;min-height:54px;box-shadow:0 8px 24px #000b}
+#sheet{position:fixed;inset:0;background:#000b;display:none;align-items:flex-end;z-index:9}
 #sheet.on{display:flex}
-#sheet form{background:var(--card);width:100%;max-width:560px;margin:auto;border-radius:18px 18px 0 0;padding:16px;display:grid;gap:10px}
-#sheet label{font-size:12px;color:var(--mut);display:grid;gap:4px}
-#toast{position:fixed;left:50%;top:14px;transform:translateX(-50%);background:#fff;color:#000;padding:8px 14px;border-radius:10px;display:none;z-index:99;font-size:13px}
+#sheet form{background:var(--pan);width:100%;max-width:560px;margin:auto;border-radius:22px 22px 0 0;padding:18px 16px calc(16px + env(safe-area-inset-bottom));display:grid;gap:12px;max-height:92vh;overflow:auto;animation:up .22s ease-out}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+#sheet label{font-size:13px;color:var(--mut);display:grid;gap:5px}
+#fNom{font-size:26px;font-weight:800}
+#toast{position:fixed;left:50%;top:14px;transform:translateX(-50%);background:#fff;color:#000;padding:10px 16px;border-radius:12px;display:none;z-index:99;font-size:14px;box-shadow:0 6px 20px #0008}
 #login{max-width:360px;margin:12vh auto;padding:16px;display:grid;gap:10px}
-.hide{display:none!important}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
@@ -51,27 +85,27 @@ button.sm{padding:6px 10px;font-size:13px}
 </div>
 
 <div id="app" class="wrap hide">
-  <div class="top"><div><h1>Keuangan</h1><div class="mut">FvcktheRules</div></div>
-    <div class="row" style="flex:0"><button class="sm" id="bSync">⟳ Tarik web</button><button class="sm" id="bOut">Keluar</button></div></div>
-
-  <div class="mon"><button id="mPrev">‹</button><input type="month" id="mIn"><button id="mNext">›</button></div>
-
-  <div class="card"><div class="mut">TOTAL UANG (s/d bulan ini)</div><div class="big" id="sSaldo">-</div></div>
-  <div class="grid">
-    <div class="card"><div class="mut">Pemasukan</div><div class="g" style="font-weight:700" id="sMasuk">-</div></div>
-    <div class="card"><div class="mut">Pengeluaran</div><div class="r" style="font-weight:700" id="sKeluar">-</div></div>
+  <div class="bar">
+    <div class="top"><div><h1>Keuangan</h1><div class="mut">FvcktheRules</div></div>
+      <div class="tr"><button class="ic" id="bSync" aria-label="Tarik order dari website" title="Tarik order dari website">⟳</button><button class="sm" id="bOut">Keluar</button></div></div>
+    <div class="mon"><button id="mPrev" aria-label="Bulan sebelumnya">‹</button><input type="month" id="mIn"><button id="mNext" aria-label="Bulan berikutnya">›</button></div>
   </div>
-  <div class="card" style="font-size:13px">
-    <div class="row"><span>Umum (iklan, web, dll)</span><span id="sUmum" style="text-align:right"></span></div>
-    <div class="row"><span>Kaos (vendor + lain)</span><span id="sKaos" style="text-align:right"></span></div>
-    <div class="row" style="border-top:1px solid var(--line);margin-top:6px;padding-top:6px"><b>Sisa bulan ini</b><b id="sSisa" style="text-align:right"></b></div>
+  <div class="score">
+    <div class="half"><div><div class="mut">Masuk</div><div class="num g" id="sMasuk">-</div></div><div><div class="mut">Keluar</div><div class="num r" id="sKeluar">-</div></div></div>
+    <div class="use"><i id="sBar"></i></div>
+    <div class="mut" id="sPct" style="margin-top:6px;font-size:12px"></div>
+    <div class="tot"><span class="mut">Total uang sampai bulan ini</span><b id="sSaldo">-</b></div>
   </div>
-
+  <div class="brk">
+    <div class="line"><span>Umum (iklan, web, dll)</span><span id="sUmum"></span></div>
+    <div class="line" data-go="kaos" style="cursor:pointer"><span>Kaos (vendor + lain)</span><span id="sKaos"></span></div>
+    <div class="line"><b>Sisa bulan ini</b><b id="sSisa"></b></div>
+  </div>
   <div class="tabs"><button data-tab="trx" class="on">Transaksi</button><button data-tab="kaos">Rekap Kaos</button></div>
 
   <div id="tTrx">
-    <div class="row" style="margin-bottom:8px"><select id="fFilter"><option value="">Semua</option><option value="masuk">Pemasukan</option><option value="keluar">Pengeluaran</option></select></div>
-    <div class="card" id="lTrx"></div>
+    <div class="chips" style="margin:12px 0 2px"><button data-f="" class="on">Semua</button><button data-f="masuk">Pemasukan</button><button data-f="keluar">Pengeluaran</button></div>
+    <div id="lTrx"></div>
   </div>
 
   <div id="tKaos" class="hide">
@@ -90,14 +124,15 @@ button.sm{padding:6px 10px;font-size:13px}
 </div>
 
 <div id="sheet"><form id="fForm">
-  <b id="fTitle">Catat</b>
-  <div class="row"><label>Jenis<select id="fTipe"><option value="keluar">Pengeluaran</option><option value="masuk">Pemasukan</option></select></label>
-  <label>Kelompok<select id="fGrup"></select></label></div>
-  <label>Tanggal<input type="date" id="fTgl" required></label>
-  <label>Keterangan<input id="fKet" placeholder="mis. Iklan IG, DP vendor, stiker" required></label>
-  <div class="row"><label>Nominal (Rp)<input id="fNom" type="number" inputmode="numeric" min="0" required></label>
-  <label id="fQtyW">Jumlah kaos<input id="fQty" type="number" inputmode="numeric" min="0" value="0"></label></div>
-  <div class="row"><button type="button" id="fCancel">Batal</button><button class="pri" type="submit">Simpan</button></div>
+  <b id="fTitle" style="font-size:18px">Catat baru</b>
+  <input type="hidden" id="fTipe" value="keluar">
+  <div class="seg" id="fSeg"><button type="button" data-t="keluar">Pengeluaran</button><button type="button" data-t="masuk">Pemasukan</button></div>
+  <label>Nominal (Rp)<input id="fNom" type="number" inputmode="numeric" min="0" placeholder="0" required></label>
+  <label>Kelompok<select id="fGrup"></select></label>
+  <label>Keterangan<input id="fKet" placeholder="mis. Iklan IG" required></label>
+  <div class="chips" id="fChips"></div>
+  <div class="row"><label>Tanggal<input type="date" id="fTgl" required></label><label id="fQtyW">Jumlah kaos<input id="fQty" type="number" inputmode="numeric" min="0" value="0"></label></div>
+  <div class="row"><button type="button" class="danger hide" id="fDel">Hapus</button><button type="button" id="fCancel">Batal</button><button class="pri" type="submit">Simpan</button></div>
 </form></div>
 
 <script type="module">
@@ -120,7 +155,7 @@ const rp=n=>(n<0?'-':'')+'Rp'+Math.abs(Math.round(n)).toLocaleString('id-ID');
 const toast=t=>{const e=$('#toast');e.textContent=t;e.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display='none',3000)};
 const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 
-let all=[], bulan=today().slice(0,7), tab='trx', editing=null, synced=false;
+let filt='', all=[], bulan=today().slice(0,7), tab='trx', editing=null, synced=false;
 const GRUP_LABEL={umum:'Umum',vendor:'Kaos · Vendor',kaos_lain:'Kaos · Lain',kaos:'Kaos',lain:'Lainnya'};
 
 // ── LOGIN ─────────────────────────────
@@ -146,6 +181,7 @@ onAuthStateChanged(kAuth,u=>{
 // ── SINKRON DARI WEBSITE UTAMA ─────────
 async function sync(silent){
   if(!mAuth.currentUser){if(!silent)toast('Login ulang dulu (Keluar → Masuk) agar bisa tarik order');return}
+  $('#bSync').classList.add('spin');
   try{
     const snap=await getDocs(query(collection(mDb,'orders'),orderBy('createdAt','desc')));
     const ex=new Map(all.map(x=>[x.id,x])); let n=0; const jobs=[];
@@ -166,20 +202,18 @@ async function sync(silent){
     }
     await Promise.all(jobs);
     if(!silent||n)toast(n?`${n} order disinkronkan`:'Sudah paling baru');
-  }catch(e){toast('Gagal tarik order: '+(e.code||e.message))}
+  }catch(e){toast('Gagal tarik order: '+(e.code||e.message))}finally{$('#bSync').classList.remove('spin')}
 }
 $('#bSync').onclick=()=>sync(false);
 
 // ── RENDER ────────────────────────────
 const sum=a=>a.reduce((t,x)=>t+Number(x.nominal||0),0);
-function itemHTML(x){
-  const auto=x.sumber==='auto';
-  return `<div class="item"><div style="min-width:0"><div>${esc(x.ket)}</div>
-    <div class="mut">${esc(x.tanggal)} <span class="tag">${GRUP_LABEL[x.grup]||''}</span>${auto?'<span class="tag">otomatis</span>':''}${x.tipe==='masuk'&&x.qty?` <span class="tag">${x.qty} pcs</span>`:''}</div>
-    <div class="acts"><button class="sm" data-edit="${x.id}">Edit</button><button class="sm" data-del="${x.id}">Hapus</button></div></div>
-    <div class="n ${x.tipe==='masuk'?'g':'r'}">${x.tipe==='masuk'?'+':'-'}${rp(x.nominal)}</div></div>`;
-}
-const list=(a,empty='Belum ada data')=>a.length?a.map(itemHTML).join(''):`<div class="mut" style="padding:8px 0">${empty}</div>`;
+const HARI=['Min','Sen','Sel','Rab','Kam','Jum','Sab'],BLN=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+const tgl=s=>{const d=new Date(s+'T00:00');return isNaN(d)?s:`${HARI[d.getDay()]}, ${d.getDate()} ${BLN[d.getMonth()]}`};
+function itemHTML(x){const m=x.tipe==='masuk';
+  return `<div class="item" data-edit="${x.id}"><div class="dot ${m?'in':'out'}">${m?'↓':'↑'}</div><div class="t"><div>${esc(x.ket)}</div><div class="tag">${GRUP_LABEL[x.grup]||''}${x.sumber==='auto'?' · otomatis':''}${m&&x.qty?` · ${x.qty} pcs`:''}</div></div><div class="n ${m?'g':'r'}">${m?'+':'-'}${rp(x.nominal)}</div></div>`}
+const list=(a,empty='Belum ada catatan di bulan ini. Tekan + Catat untuk mulai.')=>{if(!a.length)return `<div class="empty">${empty}</div>`;let last='';
+  return a.map(x=>{const h=x.tanggal!==last?`<div class="day">${tgl(x.tanggal)}</div>`:'';last=x.tanggal;return h+itemHTML(x)}).join('')};
 function render(){
   const data=all.filter(x=>!x.deleted), bln=data.filter(x=>x.bulan===bulan).sort((a,b)=>b.tanggal.localeCompare(a.tanggal));
   const masuk=sum(bln.filter(x=>x.tipe==='masuk')), keluar=bln.filter(x=>x.tipe==='keluar');
@@ -189,7 +223,8 @@ function render(){
   $('#sSaldo').textContent=rp(saldo);$('#sMasuk').textContent=rp(masuk);$('#sKeluar').textContent=rp(totKeluar);
   $('#sUmum').textContent=rp(umum);$('#sKaos').textContent=rp(vendor+lain);
   const sisa=masuk-totKeluar;$('#sSisa').textContent=rp(sisa);$('#sSisa').className=sisa>=0?'g':'r';
-  const f=$('#fFilter').value;$('#lTrx').innerHTML=list(bln.filter(x=>!f||x.tipe===f));
+  const pct=masuk>0?Math.min(100,Math.round(totKeluar/masuk*100)):(totKeluar?100:0);$('#sBar').style.width=pct+'%';$('#sPct').textContent=masuk>0?pct+'% pemasukan terpakai':'Belum ada pemasukan bulan ini';
+  const f=filt;$('#lTrx').innerHTML=list(bln.filter(x=>!f||x.tipe===f));
   // Rekap kaos
   const kIn=bln.filter(x=>x.tipe==='masuk'&&x.grup==='kaos'), kMasuk=sum(kIn), laba=kMasuk-vendor-lain;
   $('#kQty').textContent=kIn.reduce((t,x)=>t+Number(x.qty||0),0);$('#kMasuk').textContent=rp(kMasuk);
@@ -202,31 +237,38 @@ function render(){
 function setMonth(m){bulan=m;$('#mIn').value=m;render()}
 const shift=d=>{let [y,m]=bulan.split('-').map(Number);m+=d;if(m<1){m=12;y--}if(m>12){m=1;y++}setMonth(y+'-'+String(m).padStart(2,'0'))};
 $('#mPrev').onclick=()=>shift(-1);$('#mNext').onclick=()=>shift(1);$('#mIn').onchange=e=>e.target.value&&setMonth(e.target.value);
-$('#fFilter').onchange=render;
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;
   document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b));
   $('#tTrx').classList.toggle('hide',tab!=='trx');$('#tKaos').classList.toggle('hide',tab!=='kaos')});
 
 // ── FORM TAMBAH / EDIT ────────────────
+const CHIPS={umum:['Iklan','Follower','Website','Packing'],vendor:['DP vendor','Pelunasan vendor'],kaos_lain:['Stiker','Label','Plastik','Packing'],kaos:['Penjualan kaos'],lain:['Lainnya']};
+function setTipe(t){$('#fTipe').value=t;document.querySelectorAll('#fSeg button').forEach(b=>b.classList.toggle('on',b.dataset.t===t))}
 function fillGrup(tipe,val){
   const opt=tipe==='masuk'?[['kaos','Kaos'],['lain','Lainnya']]:[['umum','Umum (iklan, website, dll)'],['vendor','Kaos · Vendor'],['kaos_lain','Kaos · Perlengkapan lain']];
   $('#fGrup').innerHTML=opt.map(([v,l])=>`<option value="${v}">${l}</option>`).join('');if(val)$('#fGrup').value=val;
   $('#fQtyW').classList.toggle('hide',!(tipe==='masuk'&&$('#fGrup').value==='kaos'));
+  $('#fChips').innerHTML=(CHIPS[$('#fGrup').value]||[]).map(c=>`<button type="button" data-chip="${esc(c)}">${esc(c)}</button>`).join('');
 }
 function openForm(x,preGrup){
   editing=x?.id||null;
   const tipe=x?.tipe||(preGrup==='kaos'?'masuk':'keluar');
-  $('#fTitle').textContent=x?'Edit catatan':'Catat baru';$('#fTipe').value=tipe;fillGrup(tipe,x?.grup||preGrup);
+  $('#fTitle').textContent=x?'Edit catatan':'Catat baru';setTipe(tipe);fillGrup(tipe,x?.grup||preGrup);
   $('#fTgl').value=x?.tanggal||(bulan===today().slice(0,7)?today():bulan+'-01');
   $('#fKet').value=x?.ket||'';$('#fNom').value=x?.nominal??'';$('#fQty').value=x?.qty??0;
-  $('#sheet').classList.add('on');
+  $('#fDel').classList.toggle('hide',!x);$('#sheet').classList.add('on');
+  if(!x)setTimeout(()=>$('#fNom').focus(),60);
 }
-$('#fTipe').onchange=e=>fillGrup(e.target.value);
+document.querySelectorAll('#fSeg button').forEach(b=>b.onclick=()=>{setTipe(b.dataset.t);fillGrup(b.dataset.t)});
 $('#fGrup').onchange=()=>fillGrup($('#fTipe').value,$('#fGrup').value);
+$('#fDel').onclick=async()=>{const id=editing;$('#sheet').classList.remove('on');await hapus(id)};
 $('#fCancel').onclick=()=>$('#sheet').classList.remove('on');
 $('#bAdd').onclick=()=>openForm(null,tab==='kaos'?'vendor':null);
 document.addEventListener('click',e=>{
-  const t=e.target.closest('[data-add],[data-edit],[data-del]');if(!t)return;
+  const t=e.target.closest('[data-add],[data-edit],[data-del],[data-chip],[data-f],[data-go]');if(!t)return;
+  if(t.dataset.chip!==undefined){$('#fKet').value=t.dataset.chip;return}
+  if(t.dataset.f!==undefined){filt=t.dataset.f;document.querySelectorAll('[data-f]').forEach(b=>b.classList.toggle('on',b===t));render();return}
+  if(t.dataset.go)document.querySelector(`.tabs [data-tab="${t.dataset.go}"]`).click();
   if(t.dataset.add)openForm(null,t.dataset.add);
   if(t.dataset.edit)openForm(all.find(x=>x.id===t.dataset.edit));
   if(t.dataset.del)hapus(t.dataset.del);
