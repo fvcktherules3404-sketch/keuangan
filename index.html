@@ -2,91 +2,152 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#0d120f">
+<meta name="theme-color" content="#0a1510">
 <title>Keuangan | FvcktheRules</title>
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
-<div id="toast"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-dash" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></symbol>
+    <symbol id="i-in" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></symbol>
+    <symbol id="i-out" viewBox="0 0 24 24"><path d="M12 15V3M7 8l5-5 5 5M4 20h16"/></symbol>
+    <symbol id="i-shirt" viewBox="0 0 24 24"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></symbol>
+    <symbol id="i-sync" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-eyeoff" viewBox="0 0 24 24"><path d="M3 3l18 18M10.6 5.1A10 10 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.2 4M6.6 6.6A17 17 0 0 0 2 12s3.6 7 10 7a9.7 9.7 0 0 0 4.4-1M9.9 9.9a3 3 0 0 0 4.2 4.2"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  </defs>
+</svg>
+
+<div id="toast" role="status" aria-live="polite"></div>
 
 <div id="login" class="hide">
-  <h1>Keuangan FvcktheRules</h1>
-  <p class="mut">Khusus admin.</p>
-  <button class="pri" id="bGoogle">Masuk dengan Google</button>
-  <p class="mut" style="text-align:center;margin:0">atau email</p>
-  <input id="lEmail" type="email" placeholder="Email admin" autocomplete="username">
-  <input id="lPass" type="password" placeholder="Password" autocomplete="current-password">
-  <button id="bEmail">Masuk</button>
-  <p id="lErr" class="r" style="font-size:13px;margin:0"></p>
+  <div class="lcard">
+    <div class="ball">⚽</div>
+    <h1>Keuangan FvcktheRules</h1>
+    <p class="mut" style="text-align:center;margin:0">Ruang ganti khusus admin.</p>
+    <button class="pri" id="bGoogle">Masuk dengan Google</button>
+    <p class="mut" style="text-align:center;margin:0">atau pakai email</p>
+    <input id="lEmail" type="email" placeholder="Email admin" autocomplete="username">
+    <input id="lPass" type="password" placeholder="Password" autocomplete="current-password">
+    <button id="bEmail">Masuk</button>
+    <p id="lErr" class="r" style="font-size:13px;margin:0;text-align:center"></p>
+  </div>
 </div>
-
 
 <div id="app" class="hide">
   <aside id="side">
-    <div class="brand"><b>Keuangan</b><div class="mut">FvcktheRules</div></div>
-    <button data-nav="dash" class="on"><span>▦</span>Dasbor</button>
-    <button data-nav="masuk"><span>↓</span>Pemasukan</button>
-    <button data-nav="keluar"><span>↑</span>Pengeluaran</button>
-    <button data-nav="kaos"><span>◈</span>Rekap Kaos</button>
+    <div class="brand"><span class="ball sm">⚽</span><div><b>Keuangan</b><div class="mut">FvcktheRules</div></div></div>
+    <button data-nav="dash" class="on"><svg class="i"><use href="#i-dash"/></svg>Dasbor</button>
+    <button data-nav="masuk"><svg class="i"><use href="#i-in"/></svg>Pemasukan</button>
+    <button data-nav="keluar"><svg class="i"><use href="#i-out"/></svg>Pengeluaran</button>
+    <button data-nav="kaos"><svg class="i"><use href="#i-shirt"/></svg>Rekap Kaos</button>
     <div class="sp"></div>
-    <button id="bSync"><span id="syncIc">⟳</span>Tarik order web</button>
-    <button id="bOut"><span>⎋</span>Keluar</button>
+    <button data-sync><svg class="i syncIc"><use href="#i-sync"/></svg>Tarik order web</button>
+    <button data-out><svg class="i"><use href="#i-logout"/></svg>Keluar</button>
   </aside>
-  <div id="scrim"></div>
 
   <div class="main"><div class="in">
     <header class="bar">
-      <div class="tr"><button class="ic" id="bMenu" aria-label="Menu">☰</button><h1 id="ttl">Dasbor</h1></div>
+      <div class="top">
+        <div class="tr"><span class="ball sm mob">⚽</span><h1 id="ttl">Dasbor</h1></div>
+        <div class="tr mob">
+          <button class="ic" data-sync aria-label="Tarik order web"><svg class="i syncIc"><use href="#i-sync"/></svg></button>
+          <button class="ic" data-out aria-label="Keluar"><svg class="i"><use href="#i-logout"/></svg></button>
+        </div>
+      </div>
       <div class="mon"><button id="mPrev" aria-label="Bulan sebelumnya">‹</button><input type="month" id="mIn"><button id="mNext" aria-label="Bulan berikutnya">›</button></div>
     </header>
 
-    <section id="v-dash" class="view"><div class="cols"><div>
-      <div class="score" style="margin-top:14px">
-        <div class="half"><div><div class="mut">Masuk</div><div class="num g" id="sMasuk">-</div></div><div><div class="mut">Keluar</div><div class="num r" id="sKeluar">-</div></div></div>
+    <!-- DASBOR -->
+    <section id="v-dash" class="view">
+      <div class="hero">
+        <div class="hero-top">
+          <span class="eyebrow">Total kas · s.d. <span id="sBlnLbl"></span></span>
+          <button class="eye" id="bEye" aria-label="Sembunyikan nominal"><svg class="i"><use href="#i-eye"/></svg></button>
+        </div>
+        <div class="hero-num" id="sSaldo">-</div>
+        <div class="hero-sub" id="sDelta"></div>
+      </div>
+
+      <div class="score">
+        <div class="half">
+          <div><div class="mut">Gol masuk</div><div class="num g" id="sMasuk">-</div></div>
+          <div><div class="mut">Kebobolan</div><div class="num r" id="sKeluar">-</div></div>
+        </div>
         <div class="use"><i id="sBar"></i></div>
-        <div class="mut" id="sPct" style="margin-top:6px;font-size:12px"></div>
-        <div class="tot"><span class="mut">Total uang sampai bulan ini</span><b id="sSaldo">-</b></div>
+        <div class="use-lbl"><span id="sPct"></span><span>Sisa <b id="sSisa"></b></span></div>
       </div>
-      <div class="brk">
-        <div class="line"><span>Umum (iklan, web, dll)</span><span id="sUmum"></span></div>
-        <div class="line" data-go="kaos" style="cursor:pointer"><span>Kaos (vendor + lain)</span><span id="sKaos"></span></div>
-        <div class="line"><b>Sisa bulan ini</b><b id="sSisa"></b></div>
+
+      <h2>Statistik</h2>
+      <div class="charts">
+        <div class="card wide">
+          <div class="ch">Pemasukan vs pengeluaran · 6 bulan</div>
+          <div class="trend" id="trend"></div>
+          <div class="legend"><span><i class="sq g"></i>Masuk</span><span><i class="sq r"></i>Keluar</span><span class="mut">Ketuk bulan untuk pindah</span></div>
+        </div>
+        <div class="card">
+          <div class="ch">Pergerakan total kas</div>
+          <div id="sLine"></div>
+        </div>
+        <div class="card">
+          <div class="ch">Ke mana uang keluar</div>
+          <div id="sDonut"></div>
+        </div>
       </div>
-    </div><div>
-      <h2>Tren 6 bulan</h2>
-      <div class="card"><div class="trend" id="trend"></div><div class="mut" style="margin-top:10px"><span class="g">■</span> Masuk &nbsp; <span class="r">■</span> Keluar</div></div>
+
+      <h2>Rincian bulan ini</h2>
+      <div class="card brk">
+        <div class="line"><span>Umum (iklan, web, dll)</span><b id="sUmum"></b></div>
+        <div class="line go" data-go="kaos"><span>Kaos (vendor + lain)</span><b id="sKaos"></b></div>
+      </div>
+
       <h2>Terbaru</h2><div id="lRecent"></div>
-    </div></div></section>
+    </section>
 
     <section id="v-masuk" class="view hide">
-      <div class="card" style="margin-top:14px"><div class="mut">Total pemasukan</div><div class="big g" id="pMasuk">-</div></div>
+      <div class="card sumcard"><div class="mut">Total pemasukan</div><div class="big g" id="pMasuk">-</div></div>
       <div id="bkMasuk"></div><h2>Riwayat</h2><div id="lMasuk"></div>
     </section>
 
     <section id="v-keluar" class="view hide">
-      <div class="card" style="margin-top:14px"><div class="mut">Total pengeluaran</div><div class="big r" id="pKeluar">-</div></div>
+      <div class="card sumcard"><div class="mut">Total pengeluaran</div><div class="big r" id="pKeluar">-</div></div>
       <div id="bkKeluar"></div><h2>Riwayat</h2><div id="lKeluar"></div>
     </section>
 
-    <section id="v-kaos" class="view hide" style="padding-top:14px">
-    <div class="grid">
-      <div class="card"><div class="mut">Kaos terjual</div><div class="big b" id="kQty">0</div></div>
-      <div class="card"><div class="mut">Uang kaos masuk</div><div class="g" style="font-weight:700" id="kMasuk">-</div></div>
-      <div class="card"><div class="mut">Modal vendor</div><div class="r" style="font-weight:700" id="kVendor">-</div></div>
-      <div class="card"><div class="mut">Perlengkapan lain</div><div class="r" style="font-weight:700" id="kLain">-</div></div>
-    </div>
-    <div class="card"><div class="mut">LABA KAOS BULAN INI</div><div class="big" id="kLaba">-</div></div>
-    <div class="card"><div class="row"><b>Vendor</b><button class="sm pri" data-add="vendor" style="flex:0">+ Tambah</button></div><div id="lVendor"></div></div>
-    <div class="card"><div class="row"><b>Perlengkapan lain (stiker, dll)</b><button class="sm pri" data-add="kaos_lain" style="flex:0">+ Tambah</button></div><div id="lLain"></div></div>
-    <div class="card"><b>Pemasukan kaos</b><div id="lKaosIn"></div></div>
-  </section>
+    <section id="v-kaos" class="view hide">
+      <div class="card sumcard laba"><div class="mut">Laba kaos bulan ini</div><div class="big" id="kLaba">-</div></div>
+      <div class="grid">
+        <div class="card"><div class="mut">Kaos terjual</div><div class="big b" id="kQty">0</div></div>
+        <div class="card"><div class="mut">Uang kaos masuk</div><div class="mid g" id="kMasuk">-</div></div>
+        <div class="card"><div class="mut">Modal vendor</div><div class="mid r" id="kVendor">-</div></div>
+        <div class="card"><div class="mut">Perlengkapan lain</div><div class="mid r" id="kLain">-</div></div>
+      </div>
+      <div class="card"><div class="row"><b>Vendor</b><button class="sm pri" data-add="vendor" style="flex:0;white-space:nowrap">+ Tambah</button></div><div id="lVendor"></div></div>
+      <div class="card"><div class="row"><b>Perlengkapan lain (stiker, dll)</b><button class="sm pri" data-add="kaos_lain" style="flex:0;white-space:nowrap">+ Tambah</button></div><div id="lLain"></div></div>
+      <div class="card"><b>Pemasukan kaos</b><div id="lKaosIn"></div></div>
+    </section>
   </div></div>
-  <button class="pri fab" id="bAdd">+ Catat</button>
+
+  <button class="pri fab" id="bAdd"><svg class="i"><use href="#i-plus"/></svg>Catat</button>
+
+  <nav id="bnav" aria-label="Navigasi utama">
+    <button data-nav="dash" class="on"><svg class="i"><use href="#i-dash"/></svg><span>Dasbor</span></button>
+    <button data-nav="masuk"><svg class="i"><use href="#i-in"/></svg><span>Masuk</span></button>
+    <button data-nav="keluar"><svg class="i"><use href="#i-out"/></svg><span>Keluar</span></button>
+    <button data-nav="kaos"><svg class="i"><use href="#i-shirt"/></svg><span>Kaos</span></button>
+  </nav>
 </div>
 
 <div id="sheet"><form id="fForm">
+  <div class="grab"></div>
   <b id="fTitle" style="font-size:18px">Catat baru</b>
   <input type="hidden" id="fTipe" value="keluar">
   <div class="seg" id="fSeg"><button type="button" data-t="keluar">Pengeluaran</button><button type="button" data-t="masuk">Pemasukan</button></div>
@@ -98,6 +159,6 @@
   <div class="row"><button type="button" class="danger hide" id="fDel">Hapus</button><button type="button" id="fCancel">Batal</button><button class="pri" type="submit">Simpan</button></div>
 </form></div>
 
-<script type="module" src="app.js?v=3"></script>
+<script type="module" src="app.js?v=4"></script>
 </body>
 </html>

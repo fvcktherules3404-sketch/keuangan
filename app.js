@@ -28,7 +28,7 @@ async function loginGoogle(){
 $('#bGoogle').onclick=()=>loginGoogle().catch(e=>$('#lErr').textContent=e.code||e.message);
 $('#bEmail').onclick=async()=>{try{const e=$('#lEmail').value.trim(),p=$('#lPass').value;
   await signInWithEmailAndPassword(mAuth,e,p);await signInWithEmailAndPassword(kAuth,e,p);}catch(x){$('#lErr').textContent=x.code||x.message}};
-$('#bOut').onclick=async()=>{await signOut(mAuth);await signOut(kAuth)};
+document.querySelectorAll('[data-out]').forEach(b=>b.onclick=async()=>{await signOut(mAuth);await signOut(kAuth)});
 
 let unsub=null;
 onAuthStateChanged(kAuth,u=>{
@@ -43,7 +43,7 @@ onAuthStateChanged(kAuth,u=>{
 // ── SINKRON DARI WEBSITE UTAMA ─────────
 async function sync(silent){
   if(!mAuth.currentUser){if(!silent)toast('Login ulang dulu (Keluar → Masuk) agar bisa tarik order');return}
-  $('#syncIc').classList.add('spin');
+  document.querySelectorAll('.syncIc').forEach(e=>e.classList.add('spin'));
   try{
     const snap=await getDocs(query(collection(mDb,'orders'),orderBy('createdAt','desc')));
     const ex=new Map(all.map(x=>[x.id,x])); let n=0; const jobs=[];
@@ -64,9 +64,9 @@ async function sync(silent){
     }
     await Promise.all(jobs);
     if(!silent||n)toast(n?`${n} order disinkronkan`:'Sudah paling baru');
-  }catch(e){toast('Gagal tarik order: '+(e.code||e.message))}finally{$('#syncIc').classList.remove('spin')}
+  }catch(e){toast('Gagal tarik order: '+(e.code||e.message))}finally{document.querySelectorAll('.syncIc').forEach(e=>e.classList.remove('spin'))}
 }
-$('#bSync').onclick=()=>sync(false);
+document.querySelectorAll('[data-sync]').forEach(b=>b.onclick=()=>sync(false));
 
 // ── RENDER ────────────────────────────
 const sum=a=>a.reduce((t,x)=>t+Number(x.nominal||0),0);
@@ -74,30 +74,57 @@ const HARI=['Min','Sen','Sel','Rab','Kam','Jum','Sab'],BLN=['Jan','Feb','Mar','A
 const tgl=s=>{const d=new Date(s+'T00:00');return isNaN(d)?s:`${HARI[d.getDay()]}, ${d.getDate()} ${BLN[d.getMonth()]}`};
 function itemHTML(x){const m=x.tipe==='masuk';
   return `<div class="item" data-edit="${x.id}"><div class="dot ${m?'in':'out'}">${m?'↓':'↑'}</div><div class="t"><div>${esc(x.ket)}</div><div class="tag">${GRUP_LABEL[x.grup]||''}${x.sumber==='auto'?' · otomatis':''}${m&&x.qty?` · ${x.qty} pcs`:''}</div></div><div class="n ${m?'g':'r'}">${m?'+':'-'}${rp(x.nominal)}</div></div>`}
-const list=(a,empty='Belum ada catatan di bulan ini. Tekan + Catat untuk mulai.')=>{if(!a.length)return `<div class="empty">${empty}</div>`;let last='';
+const list=(a,empty='Belum ada catatan di bulan ini. Tekan “+ Catat” untuk mulai.')=>{if(!a.length)return `<div class="empty">${empty}</div>`;let last='';
   return a.map(x=>{const h=x.tanggal!==last?`<div class="day">${tgl(x.tanggal)}</div>`:'';last=x.tanggal;return h+itemHTML(x)}).join('')};
 const brk=(rows,tot,c)=>rows.map(([l,v])=>{const p=tot?Math.round(v/tot*100):0;return `<div class="bk"><i class="${c}" style="width:${p}%"></i><span>${l}</span><b>${rp(v)}</b></div>`}).join('');
 const addM=(ym,d)=>{let [y,m]=ym.split('-').map(Number);m+=d;while(m<1){m+=12;y--}while(m>12){m-=12;y++}return y+'-'+String(m).padStart(2,'0')};
-function trend(data){const ms=[5,4,3,2,1,0].map(i=>addM(bulan,-i));
+const short=n=>{const a=Math.abs(n),s=n<0?'-':'';
+  if(a>=1e9)return s+(a/1e9).toFixed(1).replace('.0','')+'M';
+  if(a>=1e6)return s+(a/1e6).toFixed(1).replace('.0','')+'jt';
+  if(a>=1e3)return s+Math.round(a/1e3)+'rb';return s+a};
+const lastSix=()=>[5,4,3,2,1,0].map(i=>addM(bulan,-i));
+function trend(data){const ms=lastSix();
   const v=ms.map(m=>[sum(data.filter(x=>x.bulan===m&&x.tipe==='masuk')),sum(data.filter(x=>x.bulan===m&&x.tipe==='keluar'))]);
   const mx=Math.max(1,...v.flat());
-  $('#trend').innerHTML=ms.map((m,i)=>`<div class="col"><div class="bars"><i class="g" style="height:${v[i][0]/mx*100}%"></i><i class="r" style="height:${v[i][1]/mx*100}%"></i></div><span>${BLN[+m.slice(5)-1]}</span></div>`).join('')}
+  $('#trend').innerHTML=ms.map((m,i)=>`<button type="button" class="col${m===bulan?' on':''}" data-month="${m}" aria-label="${BLN[+m.slice(5)-1]}"><div class="val">${m===bulan?`<span class="g">${short(v[i][0])}</span><span class="r">${short(v[i][1])}</span>`:''}</div><div class="bars"><i class="g" style="height:${v[i][0]/mx*100}%"></i><i class="r" style="height:${v[i][1]/mx*100}%"></i></div><span>${BLN[+m.slice(5)-1]}</span></button>`).join('')}
+function lineChart(data){const ms=lastSix();
+  const pts=ms.map(m=>sum(data.filter(x=>x.bulan<=m&&x.tipe==='masuk'))-sum(data.filter(x=>x.bulan<=m&&x.tipe==='keluar')));
+  const W=320,H=150,L=8,R=8,T=26,B=24, mn=Math.min(0,...pts), mxv=Math.max(1,...pts), rg=(mxv-mn)||1;
+  const X=i=>L+i*(W-L-R)/5, Y=v=>T+(1-(v-mn)/rg)*(H-T-B);
+  const line=pts.map((v,i)=>`${i?'L':'M'}${X(i).toFixed(1)} ${Y(v).toFixed(1)}`).join(' ');
+  const area=`${line} L${X(5)} ${Y(mn)} L${X(0)} ${Y(mn)}Z`;
+  const zero=mn<0?`<line x1="${L}" x2="${W-R}" y1="${Y(0)}" y2="${Y(0)}" stroke="#ffffff30" stroke-dasharray="3 4"/>`:'';
+  $('#sLine').innerHTML=`<svg class="chart-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Grafik total kas 6 bulan">
+    <defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd34d" stop-opacity=".35"/><stop offset="1" stop-color="#ffd34d" stop-opacity="0"/></linearGradient></defs>
+    <line x1="${L}" x2="${W-R}" y1="${Y(mn)}" y2="${Y(mn)}" stroke="#ffffff1a"/>${zero}
+    <path d="${area}" fill="url(#lg)"/><path d="${line}" fill="none" stroke="#ffd34d" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+    ${pts.map((v,i)=>`<circle cx="${X(i)}" cy="${Y(v)}" r="${i===5?5:3}" fill="${i===5?'#ffd34d':'#0a1510'}" stroke="#ffd34d" stroke-width="2"/>`).join('')}
+    <text class="v" x="${X(5)}" y="${Y(pts[5])-11}" text-anchor="end">${short(pts[5])}</text>
+    ${ms.map((m,i)=>`<text x="${X(i)}" y="${H-6}" text-anchor="${i===0?'start':i===5?'end':'middle'}">${BLN[+m.slice(5)-1]}</text>`).join('')}</svg>`}
+function donut(parts,tot){const C=2*Math.PI*40; let off=0;
+  const segs=tot>0?parts.map(p=>{const len=p.v/tot*C,e=`<circle cx="50" cy="50" r="40" fill="none" stroke="${p.c}" stroke-width="14" stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-off}" transform="rotate(-90 50 50)"/>`;off+=len;return e}).join(''):'';
+  $('#sDonut').innerHTML=`<div class="donut"><svg viewBox="0 0 100 100" role="img" aria-label="Komposisi pengeluaran"><circle cx="50" cy="50" r="40" fill="none" stroke="#ffffff12" stroke-width="14"/>${segs}
+    <text x="50" y="49" text-anchor="middle" fill="#8da296" font-size="8">Keluar</text><text x="50" y="62" text-anchor="middle" fill="#f1f5ee" font-size="12" font-weight="800">${short(tot)}</text></svg>
+    <div class="dl">${parts.map(p=>`<div><i class="sq" style="background:${p.c};margin:0"></i><span>${p.l}<br><small>${tot?Math.round(p.v/tot*100):0}%</small></span><b>${rp(p.v)}</b></div>`).join('')}</div></div>`}
 function render(){
   const data=all.filter(x=>!x.deleted), bln=data.filter(x=>x.bulan===bulan).sort((a,b)=>b.tanggal.localeCompare(a.tanggal));
   const masuk=sum(bln.filter(x=>x.tipe==='masuk')), keluar=bln.filter(x=>x.tipe==='keluar');
   const umum=sum(keluar.filter(x=>x.grup==='umum')), vendor=sum(keluar.filter(x=>x.grup==='vendor')), lain=sum(keluar.filter(x=>x.grup==='kaos_lain'));
   const totKeluar=umum+vendor+lain;
   const saldo=sum(data.filter(x=>x.bulan<=bulan&&x.tipe==='masuk'))-sum(data.filter(x=>x.bulan<=bulan&&x.tipe==='keluar'));
-  $('#sSaldo').textContent=rp(saldo);$('#sMasuk').textContent=rp(masuk);$('#sKeluar').textContent=rp(totKeluar);
+  $('#sSaldo').textContent=rp(saldo);$('#sSaldo').classList.toggle('neg',saldo<0);
+  $('#sBlnLbl').textContent=BLN[+bulan.slice(5)-1]+' '+bulan.slice(0,4);$('#sMasuk').textContent=rp(masuk);$('#sKeluar').textContent=rp(totKeluar);
   $('#sUmum').textContent=rp(umum);$('#sKaos').textContent=rp(vendor+lain);
   const sisa=masuk-totKeluar;$('#sSisa').textContent=rp(sisa);$('#sSisa').className=sisa>=0?'g':'r';
+  $('#sDelta').innerHTML=sisa===0?'<span class="mut">Belum ada perubahan bulan ini</span>':`<span class="${sisa>0?'g':'r'}">${sisa>0?'▲ +':'▼ '}${rp(sisa)}</span><span class="mut">bulan ini</span>`;
   const pct=masuk>0?Math.min(100,Math.round(totKeluar/masuk*100)):(totKeluar?100:0);$('#sBar').style.width=pct+'%';$('#sPct').textContent=masuk>0?pct+'% pemasukan terpakai':'Belum ada pemasukan bulan ini';
   const mm=bln.filter(x=>x.tipe==='masuk');
   $('#lRecent').innerHTML=list(bln.slice(0,5));$('#lMasuk').innerHTML=list(mm);$('#lKeluar').innerHTML=list(keluar);
   $('#pMasuk').textContent=rp(masuk);$('#pKeluar').textContent=rp(totKeluar);
   $('#bkMasuk').innerHTML=brk([['Kaos',sum(mm.filter(x=>x.grup==='kaos'))],['Lainnya',sum(mm.filter(x=>x.grup!=='kaos'))]],masuk,'g');
   $('#bkKeluar').innerHTML=brk([['Umum',umum],['Kaos · Vendor',vendor],['Kaos · Perlengkapan lain',lain]],totKeluar,'r');
-  trend(data);
+  trend(data);lineChart(data);
+  donut([{l:'Umum',v:umum,c:'#6cb2ff'},{l:'Vendor kaos',v:vendor,c:'#ffd34d'},{l:'Perlengkapan',v:lain,c:'#c58bff'}],totKeluar);
   // Rekap kaos
   const kIn=bln.filter(x=>x.tipe==='masuk'&&x.grup==='kaos'), kMasuk=sum(kIn), laba=kMasuk-vendor-lain;
   $('#kQty').textContent=kIn.reduce((t,x)=>t+Number(x.qty||0),0);$('#kMasuk').textContent=rp(kMasuk);
@@ -114,10 +141,8 @@ const VIEWS=['dash','masuk','keluar','kaos'],JUDUL={dash:'Dasbor',masuk:'Pemasuk
 function show(v){if(!VIEWS.includes(v))v='dash';cur=v;
   VIEWS.forEach(x=>$('#v-'+x).classList.toggle('hide',x!==v));
   document.querySelectorAll('[data-nav]').forEach(b=>b.classList.toggle('on',b.dataset.nav===v));
-  $('#ttl').textContent=JUDUL[v];document.body.classList.remove('nav-open');scrollTo(0,0)}
+  $('#ttl').textContent=JUDUL[v];scrollTo(0,0)}
 window.addEventListener('hashchange',()=>show(location.hash.slice(1)));
-$('#bMenu').onclick=()=>document.body.classList.toggle('nav-open');
-$('#scrim').onclick=()=>document.body.classList.remove('nav-open');
 
 // ── FORM TAMBAH / EDIT ────────────────
 const CHIPS={umum:['Iklan','Follower','Website','Packing'],vendor:['DP vendor','Pelunasan vendor'],kaos_lain:['Stiker','Label','Plastik','Packing'],kaos:['Penjualan kaos'],lain:['Lainnya']};
@@ -143,7 +168,8 @@ $('#fDel').onclick=async()=>{const id=editing;$('#sheet').classList.remove('on')
 $('#fCancel').onclick=()=>$('#sheet').classList.remove('on');
 $('#bAdd').onclick=()=>openForm(null,{kaos:'vendor',masuk:'kaos',keluar:'umum'}[cur]||null);
 document.addEventListener('click',e=>{
-  const t=e.target.closest('[data-add],[data-edit],[data-del],[data-chip],[data-f],[data-go],[data-nav]');if(!t)return;
+  const t=e.target.closest('[data-add],[data-edit],[data-del],[data-chip],[data-f],[data-go],[data-nav],[data-month]');if(!t)return;
+  if(t.dataset.month){setMonth(t.dataset.month);return}
   if(t.dataset.chip!==undefined){$('#fKet').value=t.dataset.chip;return}
   if(t.dataset.f!==undefined){filt=t.dataset.f;document.querySelectorAll('[data-f]').forEach(b=>b.classList.toggle('on',b===t));render();return}
   if(t.dataset.go||t.dataset.nav){const v=t.dataset.go||t.dataset.nav;location.hash=v;show(v);return}
@@ -171,5 +197,10 @@ async function hapus(id){
     toast('Dihapus');
   }catch(e){toast('Gagal hapus: '+(e.code||e.message))}
 }
+
+// ── SEMBUNYIKAN NOMINAL ───────────────
+const eyeSet=h=>{document.body.classList.toggle('hide-bal',h);const u=$('#bEye use');if(u)u.setAttribute('href',h?'#i-eyeoff':'#i-eye');try{localStorage.setItem('hideBal',h?'1':'')}catch{}};
+$('#bEye').onclick=()=>eyeSet(!document.body.classList.contains('hide-bal'));
+try{eyeSet(!!localStorage.getItem('hideBal'))}catch{}
 
 show(location.hash.slice(1));
