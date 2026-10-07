@@ -177,3 +177,16 @@ body.hide-bal .hero-num{filter:blur(14px);user-select:none}
 .chatbar{display:flex;gap:8px}.chatbar input{flex:1;min-width:0}
 .chatbar button{flex:none;padding:0 20px}
 .chat .chips{margin-top:10px}
+
+/* BOT POPUP */
+.botfab{right:16px;bottom:calc(var(--nav) + var(--sab) + 82px);width:54px;height:54px;padding:0;justify-content:center;background:var(--gold);color:#1a1300;border:0}
+.botfab:hover{background:#ffe07a}
+.botfab .i{width:26px;height:26px}
+#chatPop{position:fixed;left:12px;right:12px;bottom:calc(var(--nav) + var(--sab) + 12px);z-index:25;background:var(--pan);border:1px solid #2f4a3a;border-radius:24px;box-shadow:0 20px 60px #000d;padding:12px 14px 14px;max-height:72vh;display:flex;flex-direction:column;animation:up .2s ease-out}
+#chatPop.hide{display:none!important}
+.chead{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.chead b{flex:1;font-family:var(--disp);font-size:20px;text-transform:uppercase;letter-spacing:.04em}
+.botav{width:36px;height:36px;border-radius:50%;background:var(--gold);color:#1a1300;display:grid;place-items:center}
+.botav .i{width:20px;height:20px}
+#chatPop #chatLog{flex:1;min-height:120px;max-height:none;overflow:auto;margin-bottom:10px;align-content:start}
+@media(min-width:900px){.botfab{right:32px;bottom:98px}#chatPop{left:auto;right:32px;bottom:164px;width:390px;max-height:min(560px,70vh)}}

@@ -172,7 +172,7 @@ document.addEventListener('click',e=>{
   if(t.dataset.ex){$('#chatIn').value=t.dataset.ex;$('#chatIn').focus();return}
   if(t.dataset.cs){chatSave(t.dataset.cs,t);return}
   if(t.dataset.cx){delete pend[t.dataset.cx];t.closest('.bub').textContent='Dibatalkan.';return}
-  if(t.dataset.ce){const d=pend[t.dataset.ce];if(d){openForm(d);$('#fDel').classList.add('hide');$('#fTitle').textContent='Periksa catatan';t.closest('.bub').textContent='Dibuka di form.'}return}
+  if(t.dataset.ce){const d=pend[t.dataset.ce];if(d){popSet(false);openForm(d);$('#fDel').classList.add('hide');$('#fTitle').textContent='Periksa catatan';t.closest('.bub').textContent='Dibuka di form.'}return}
   if(t.dataset.month){setMonth(t.dataset.month);return}
   if(t.dataset.chip!==undefined){$('#fKet').value=t.dataset.chip;return}
   if(t.dataset.f!==undefined){filt=t.dataset.f;document.querySelectorAll('[data-f]').forEach(b=>b.classList.toggle('on',b===t));render();return}
@@ -240,7 +240,7 @@ function parseChat(raw){
 }
 const pend={};let pid=0;
 function bub(cls,html){const l=$('#chatLog');l.insertAdjacentHTML('beforeend',`<div class="bub ${cls}">${html}</div>`);while(l.children.length>14)l.firstChild.remove();l.scrollTop=l.scrollHeight;return l.lastElementChild}
-function chatInit(){$('#chatLog').innerHTML='';bub('bot','Halo! Ketik catatan singkat, contoh: <b>stiker 30k</b> atau <b>jual kaos 3 pcs 270k</b>. Saya tebak kelompoknya, kamu tinggal konfirmasi.')}
+function chatInit(){$('#chatLog').innerHTML='';bub('bot','Halo! Ketik catatannya, kelompoknya saya yang atur.')}
 $('#chatForm').onsubmit=e=>{e.preventDefault();const v=$('#chatIn').value.trim();if(!v)return;
   bub('me',esc(v));$('#chatIn').value='';
   const r=parseChat(v);
@@ -253,6 +253,10 @@ async function chatSave(id,btn){const d=pend[id];if(!d)return;
     if(d.bulan!==bulan)setMonth(d.bulan);toast('Tersimpan')}
   catch(x){toast('Gagal simpan: '+(x.code||x.message))}}
 chatInit();
+const popSet=o=>{$('#chatPop').classList.toggle('hide',!o);$('#bBot').setAttribute('aria-expanded',o);if(o)setTimeout(()=>$('#chatIn').focus(),60)};
+$('#bBot').onclick=()=>popSet($('#chatPop').classList.contains('hide'));
+$('#bBotX').onclick=()=>popSet(false);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')popSet(false)});
 
 // ── SEMBUNYIKAN NOMINAL ───────────────
 const eyeSet=h=>{document.body.classList.toggle('hide-bal',h);const u=$('#bEye use');if(u)u.setAttribute('href',h?'#i-eyeoff':'#i-eye');try{localStorage.setItem('hideBal',h?'1':'')}catch{}};
