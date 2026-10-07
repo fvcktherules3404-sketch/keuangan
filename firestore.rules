@@ -1,0 +1,16 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Hanya 2 email admin yang boleh baca & tulis data keuangan
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email in [
+          'diasadhityap@gmail.com',
+          'fvcktherules3404@gmail.com'
+        ];
+    }
+    match /{document=**} {
+      allow read, write: if isAdmin();
+    }
+  }
+}
