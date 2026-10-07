@@ -6,69 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#0d120f">
 <title>Keuangan | FvcktheRules</title>
-<style>
-:root{--bg:#0d120f;--pan:#151c17;--line:#243029;--tx:#eef2ea;--mut:#8a998f;--green:#2ee59d;--red:#ff6b5e;--blue:#6cb2ff}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{scroll-padding-top:120px}
-body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;font-variant-numeric:tabular-nums;padding-bottom:110px}
-.wrap{max-width:560px;margin:auto;padding:0 14px}
-h1{font-size:19px;margin:0;font-weight:800;letter-spacing:-.01em}
-.mut{color:var(--mut);font-size:13px}.g{color:var(--green)}.r{color:var(--red)}.b{color:var(--blue)}.hide{display:none!important}
-button,select,input{font:inherit;color:var(--tx);background:#1b241e;border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-height:46px}
-button{cursor:pointer;transition:transform .08s,background .15s}button:active{transform:scale(.97)}
-button.pri{background:var(--green);color:#04130b;border:0;font-weight:800}
-button.danger{color:var(--red);border-color:#4a2a27;background:transparent}
-button.sm{min-height:40px;padding:6px 14px;font-size:14px}
-:focus-visible{outline:2px solid var(--green);outline-offset:2px}
-.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}
-.tr{display:flex;gap:6px;align-items:center}
-.ic{width:40px;min-height:40px;padding:0;border-radius:50%;font-size:18px}
-.spin{animation:sp 1s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
-.bar{position:sticky;top:0;z-index:5;margin:0 -14px;padding:12px 14px 6px;background:#0d120fee;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.top{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.mon{display:flex;align-items:center;gap:6px;margin-top:8px}
-.mon input{flex:1;text-align:center;font-weight:700;font-size:17px;background:transparent;border-color:transparent}
-.mon button{width:44px;padding:0;background:transparent}
-.score{position:relative;overflow:hidden;margin:14px 0 10px;border-radius:22px;background:linear-gradient(#143222,#0f2619);border:1px solid #1f4a33;padding:18px 16px 14px}
-.score:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:#2ee59d2b}
-.score:after{content:"";position:absolute;left:50%;top:44%;width:110px;height:110px;margin:-55px;border:1px solid #2ee59d2b;border-radius:50%}
-.score>*{position:relative;z-index:1}
-.half{display:grid;grid-template-columns:1fr 1fr}.half>div{padding:0 8px}.half>div+div{text-align:right}
-.num{font-size:27px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
-.use{height:6px;border-radius:6px;background:#0008;margin-top:16px;overflow:hidden}
-.use i{display:block;height:100%;width:0;background:var(--red);border-radius:6px;transition:width .4s}
-.tot{margin-top:14px;padding-top:12px;border-top:1px solid #2ee59d2b;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
-.tot b{font-size:21px;letter-spacing:-.01em}
-.brk .line{display:flex;justify-content:space-between;padding:11px 4px;border-bottom:1px solid var(--line)}
-.tabs,.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:4px;padding:4px;background:#101611;border:1px solid var(--line);border-radius:14px;margin:14px 0 4px}
-.tabs button,.seg button{border:0;background:transparent;min-height:42px;color:var(--mut);font-weight:700}
-.tabs .on,.seg .on{background:var(--tx);color:#07100a}
-.seg{margin:0}
-.chips{display:flex;gap:6px;flex-wrap:wrap}
-.chips button{min-height:36px;padding:4px 14px;font-size:14px;border-radius:20px}
-.chips .on{background:var(--tx);color:#07100a;border-color:var(--tx)}
-.day{margin:18px 0 2px;color:var(--mut);font-size:13px;font-weight:700}
-.item{display:flex;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px solid var(--line);cursor:pointer}
-.item:active{background:#ffffff08}
-.dot{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;flex:none;font-weight:800}
-.dot.in{background:#2ee59d1f;color:var(--green)}.dot.out{background:#ff6b5e1f;color:var(--red)}
-.item .t{flex:1;min-width:0}.item .t>div:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.tag{font-size:12px;color:var(--mut)}.n{font-weight:800;white-space:nowrap}
-.empty{padding:34px 10px;text-align:center;color:var(--mut)}
-.card{background:var(--pan);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.big{font-size:26px;font-weight:800;letter-spacing:-.02em}
-.fab{position:fixed;right:16px;bottom:calc(18px + env(safe-area-inset-bottom));border-radius:50px;padding:0 24px;min-height:54px;box-shadow:0 8px 24px #000b}
-#sheet{position:fixed;inset:0;background:#000b;display:none;align-items:flex-end;z-index:9}
-#sheet.on{display:flex}
-#sheet form{background:var(--pan);width:100%;max-width:560px;margin:auto;border-radius:22px 22px 0 0;padding:18px 16px calc(16px + env(safe-area-inset-bottom));display:grid;gap:12px;max-height:92vh;overflow:auto;animation:up .22s ease-out}
-@keyframes up{from{transform:translateY(40px);opacity:0}}
-#sheet label{font-size:13px;color:var(--mut);display:grid;gap:5px}
-#fNom{font-size:26px;font-weight:800}
-#toast{position:fixed;left:50%;top:14px;transform:translateX(-50%);background:#fff;color:#000;padding:10px 16px;border-radius:12px;display:none;z-index:99;font-size:14px;box-shadow:0 6px 20px #0008}
-#login{max-width:360px;margin:12vh auto;padding:16px;display:grid;gap:10px}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-</style>
+<link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
 <div id="toast"></div>
@@ -84,31 +22,55 @@ button.sm{min-height:40px;padding:6px 14px;font-size:14px}
   <p id="lErr" class="r" style="font-size:13px;margin:0"></p>
 </div>
 
-<div id="app" class="wrap hide">
-  <div class="bar">
-    <div class="top"><div><h1>Keuangan</h1><div class="mut">FvcktheRules</div></div>
-      <div class="tr"><button class="ic" id="bSync" aria-label="Tarik order dari website" title="Tarik order dari website">⟳</button><button class="sm" id="bOut">Keluar</button></div></div>
-    <div class="mon"><button id="mPrev" aria-label="Bulan sebelumnya">‹</button><input type="month" id="mIn"><button id="mNext" aria-label="Bulan berikutnya">›</button></div>
-  </div>
-  <div class="score">
-    <div class="half"><div><div class="mut">Masuk</div><div class="num g" id="sMasuk">-</div></div><div><div class="mut">Keluar</div><div class="num r" id="sKeluar">-</div></div></div>
-    <div class="use"><i id="sBar"></i></div>
-    <div class="mut" id="sPct" style="margin-top:6px;font-size:12px"></div>
-    <div class="tot"><span class="mut">Total uang sampai bulan ini</span><b id="sSaldo">-</b></div>
-  </div>
-  <div class="brk">
-    <div class="line"><span>Umum (iklan, web, dll)</span><span id="sUmum"></span></div>
-    <div class="line" data-go="kaos" style="cursor:pointer"><span>Kaos (vendor + lain)</span><span id="sKaos"></span></div>
-    <div class="line"><b>Sisa bulan ini</b><b id="sSisa"></b></div>
-  </div>
-  <div class="tabs"><button data-tab="trx" class="on">Transaksi</button><button data-tab="kaos">Rekap Kaos</button></div>
 
-  <div id="tTrx">
-    <div class="chips" style="margin:12px 0 2px"><button data-f="" class="on">Semua</button><button data-f="masuk">Pemasukan</button><button data-f="keluar">Pengeluaran</button></div>
-    <div id="lTrx"></div>
-  </div>
+<div id="app" class="hide">
+  <aside id="side">
+    <div class="brand"><b>Keuangan</b><div class="mut">FvcktheRules</div></div>
+    <button data-nav="dash" class="on"><span>▦</span>Dasbor</button>
+    <button data-nav="masuk"><span>↓</span>Pemasukan</button>
+    <button data-nav="keluar"><span>↑</span>Pengeluaran</button>
+    <button data-nav="kaos"><span>◈</span>Rekap Kaos</button>
+    <div class="sp"></div>
+    <button id="bSync"><span id="syncIc">⟳</span>Tarik order web</button>
+    <button id="bOut"><span>⎋</span>Keluar</button>
+  </aside>
+  <div id="scrim"></div>
 
-  <div id="tKaos" class="hide">
+  <div class="main"><div class="in">
+    <header class="bar">
+      <div class="tr"><button class="ic" id="bMenu" aria-label="Menu">☰</button><h1 id="ttl">Dasbor</h1></div>
+      <div class="mon"><button id="mPrev" aria-label="Bulan sebelumnya">‹</button><input type="month" id="mIn"><button id="mNext" aria-label="Bulan berikutnya">›</button></div>
+    </header>
+
+    <section id="v-dash" class="view"><div class="cols"><div>
+      <div class="score" style="margin-top:14px">
+        <div class="half"><div><div class="mut">Masuk</div><div class="num g" id="sMasuk">-</div></div><div><div class="mut">Keluar</div><div class="num r" id="sKeluar">-</div></div></div>
+        <div class="use"><i id="sBar"></i></div>
+        <div class="mut" id="sPct" style="margin-top:6px;font-size:12px"></div>
+        <div class="tot"><span class="mut">Total uang sampai bulan ini</span><b id="sSaldo">-</b></div>
+      </div>
+      <div class="brk">
+        <div class="line"><span>Umum (iklan, web, dll)</span><span id="sUmum"></span></div>
+        <div class="line" data-go="kaos" style="cursor:pointer"><span>Kaos (vendor + lain)</span><span id="sKaos"></span></div>
+        <div class="line"><b>Sisa bulan ini</b><b id="sSisa"></b></div>
+      </div>
+    </div><div>
+      <h2>Tren 6 bulan</h2>
+      <div class="card"><div class="trend" id="trend"></div><div class="mut" style="margin-top:10px"><span class="g">■</span> Masuk &nbsp; <span class="r">■</span> Keluar</div></div>
+      <h2>Terbaru</h2><div id="lRecent"></div>
+    </div></div></section>
+
+    <section id="v-masuk" class="view hide">
+      <div class="card" style="margin-top:14px"><div class="mut">Total pemasukan</div><div class="big g" id="pMasuk">-</div></div>
+      <div id="bkMasuk"></div><h2>Riwayat</h2><div id="lMasuk"></div>
+    </section>
+
+    <section id="v-keluar" class="view hide">
+      <div class="card" style="margin-top:14px"><div class="mut">Total pengeluaran</div><div class="big r" id="pKeluar">-</div></div>
+      <div id="bkKeluar"></div><h2>Riwayat</h2><div id="lKeluar"></div>
+    </section>
+
+    <section id="v-kaos" class="view hide" style="padding-top:14px">
     <div class="grid">
       <div class="card"><div class="mut">Kaos terjual</div><div class="big b" id="kQty">0</div></div>
       <div class="card"><div class="mut">Uang kaos masuk</div><div class="g" style="font-weight:700" id="kMasuk">-</div></div>
@@ -119,7 +81,8 @@ button.sm{min-height:40px;padding:6px 14px;font-size:14px}
     <div class="card"><div class="row"><b>Vendor</b><button class="sm pri" data-add="vendor" style="flex:0">+ Tambah</button></div><div id="lVendor"></div></div>
     <div class="card"><div class="row"><b>Perlengkapan lain (stiker, dll)</b><button class="sm pri" data-add="kaos_lain" style="flex:0">+ Tambah</button></div><div id="lLain"></div></div>
     <div class="card"><b>Pemasukan kaos</b><div id="lKaosIn"></div></div>
-  </div>
+  </section>
+  </div></div>
   <button class="pri fab" id="bAdd">+ Catat</button>
 </div>
 
@@ -135,164 +98,6 @@ button.sm{min-height:40px;padding:6px 14px;font-size:14px}
   <div class="row"><button type="button" class="danger hide" id="fDel">Hapus</button><button type="button" id="fCancel">Batal</button><button class="pri" type="submit">Simpan</button></div>
 </form></div>
 
-<script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-import {getAuth,GoogleAuthProvider,signInWithPopup,signInWithCredential,signInWithEmailAndPassword,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
-import {getFirestore,collection,doc,setDoc,addDoc,deleteDoc,getDocs,onSnapshot,query,orderBy} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-
-// Firebase UTAMA (website) — hanya BACA order
-const mainApp = initializeApp({apiKey:"AIzaSyCVL_C4opQiKC6fNG_Rw4l-519rQZICH58",authDomain:"fvcktherules-store.firebaseapp.com",projectId:"fvcktherules-store",storageBucket:"fvcktherules-store.firebasestorage.app",messagingSenderId:"382347904485",appId:"1:382347904485:web:6715a7b395d44ad07a5b0c"},"main");
-// Firebase KEUANGAN (simpan data keuangan)
-const kApp = initializeApp({apiKey:"AIzaSyBmm72IP9rcM1vImVr669QCVSQkmYj5m5c",authDomain:"keuangan-fvck.firebaseapp.com",projectId:"keuangan-fvck",storageBucket:"keuangan-fvck.firebasestorage.app",messagingSenderId:"49114814826",appId:"1:49114814826:web:f33f3d3acd89eb4f87ad13"});
-const mAuth=getAuth(mainApp), kAuth=getAuth(kApp), mDb=getFirestore(mainApp), kDb=getFirestore(kApp);
-
-// Pengaturan hitung pemasukan otomatis dari order
-const HITUNG_ONGKIR = false;                       // false = ongkir tidak dihitung sbg pemasukan
-const STATUS_PENUH = ['lunas','selesai','dikirim']; // dihitung penuh; 'dp' dihitung sebesar DP
-
-const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const rp=n=>(n<0?'-':'')+'Rp'+Math.abs(Math.round(n)).toLocaleString('id-ID');
-const toast=t=>{const e=$('#toast');e.textContent=t;e.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display='none',3000)};
-const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
-
-let filt='', all=[], bulan=today().slice(0,7), tab='trx', editing=null, synced=false;
-const GRUP_LABEL={umum:'Umum',vendor:'Kaos · Vendor',kaos_lain:'Kaos · Lain',kaos:'Kaos',lain:'Lainnya'};
-
-// ── LOGIN ─────────────────────────────
-async function loginGoogle(){
-  const r=await signInWithPopup(mAuth,new GoogleAuthProvider());
-  await signInWithCredential(kAuth,GoogleAuthProvider.credentialFromResult(r));
-}
-$('#bGoogle').onclick=()=>loginGoogle().catch(e=>$('#lErr').textContent=e.code||e.message);
-$('#bEmail').onclick=async()=>{try{const e=$('#lEmail').value.trim(),p=$('#lPass').value;
-  await signInWithEmailAndPassword(mAuth,e,p);await signInWithEmailAndPassword(kAuth,e,p);}catch(x){$('#lErr').textContent=x.code||x.message}};
-$('#bOut').onclick=async()=>{await signOut(mAuth);await signOut(kAuth)};
-
-let unsub=null;
-onAuthStateChanged(kAuth,u=>{
-  $('#login').classList.toggle('hide',!!u);$('#app').classList.toggle('hide',!u);
-  if(unsub){unsub();unsub=null}
-  if(!u){all=[];synced=false;return}
-  $('#mIn').value=bulan;
-  unsub=onSnapshot(collection(kDb,'transaksi'),s=>{all=s.docs.map(d=>({id:d.id,...d.data()}));render();
-    if(!synced){synced=true;sync(true)}},e=>toast('Gagal baca data: '+(e.code||e.message)));
-});
-
-// ── SINKRON DARI WEBSITE UTAMA ─────────
-async function sync(silent){
-  if(!mAuth.currentUser){if(!silent)toast('Login ulang dulu (Keluar → Masuk) agar bisa tarik order');return}
-  $('#bSync').classList.add('spin');
-  try{
-    const snap=await getDocs(query(collection(mDb,'orders'),orderBy('createdAt','desc')));
-    const ex=new Map(all.map(x=>[x.id,x])); let n=0; const jobs=[];
-    for(const d of snap.docs){
-      const o=d.data(), st=String(o.status||'').toLowerCase(), id='order_'+d.id, old=ex.get(id);
-      if(old&&(old.edited||old.deleted))continue;
-      let nom=0;
-      if(st==='dp')nom=Number(o.dpNominal||0);
-      else if(STATUS_PENUH.includes(st))nom=Number(o.totalAkhir||0)-(HITUNG_ONGKIR?0:Number(o.ongkir||0));
-      if(nom<=0){if(old){jobs.push(deleteDoc(doc(kDb,'transaksi',id)));n++}continue}
-      const qty=Array.isArray(o.produk)?o.produk.length:1;
-      const nama=o.produkText||(Array.isArray(o.produk)?o.produk.map(p=>p.nama).join(', '):o.produk)||'Order';
-      const tgl=String(o.createdAt||'').slice(0,10)||today();
-      if(old&&old.nominal===nom&&old.qty===qty)continue;
-      jobs.push(setDoc(doc(kDb,'transaksi',id),{tipe:'masuk',grup:'kaos',bulan:tgl.slice(0,7),tanggal:tgl,
-        ket:nama+(o.kodePelunasan?' ('+o.kodePelunasan+')':'')+(st==='dp'?' · DP':''),nominal:nom,qty,sumber:'auto',orderId:d.id,createdAt:old?.createdAt||Date.now()}));
-      n++;
-    }
-    await Promise.all(jobs);
-    if(!silent||n)toast(n?`${n} order disinkronkan`:'Sudah paling baru');
-  }catch(e){toast('Gagal tarik order: '+(e.code||e.message))}finally{$('#bSync').classList.remove('spin')}
-}
-$('#bSync').onclick=()=>sync(false);
-
-// ── RENDER ────────────────────────────
-const sum=a=>a.reduce((t,x)=>t+Number(x.nominal||0),0);
-const HARI=['Min','Sen','Sel','Rab','Kam','Jum','Sab'],BLN=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
-const tgl=s=>{const d=new Date(s+'T00:00');return isNaN(d)?s:`${HARI[d.getDay()]}, ${d.getDate()} ${BLN[d.getMonth()]}`};
-function itemHTML(x){const m=x.tipe==='masuk';
-  return `<div class="item" data-edit="${x.id}"><div class="dot ${m?'in':'out'}">${m?'↓':'↑'}</div><div class="t"><div>${esc(x.ket)}</div><div class="tag">${GRUP_LABEL[x.grup]||''}${x.sumber==='auto'?' · otomatis':''}${m&&x.qty?` · ${x.qty} pcs`:''}</div></div><div class="n ${m?'g':'r'}">${m?'+':'-'}${rp(x.nominal)}</div></div>`}
-const list=(a,empty='Belum ada catatan di bulan ini. Tekan + Catat untuk mulai.')=>{if(!a.length)return `<div class="empty">${empty}</div>`;let last='';
-  return a.map(x=>{const h=x.tanggal!==last?`<div class="day">${tgl(x.tanggal)}</div>`:'';last=x.tanggal;return h+itemHTML(x)}).join('')};
-function render(){
-  const data=all.filter(x=>!x.deleted), bln=data.filter(x=>x.bulan===bulan).sort((a,b)=>b.tanggal.localeCompare(a.tanggal));
-  const masuk=sum(bln.filter(x=>x.tipe==='masuk')), keluar=bln.filter(x=>x.tipe==='keluar');
-  const umum=sum(keluar.filter(x=>x.grup==='umum')), vendor=sum(keluar.filter(x=>x.grup==='vendor')), lain=sum(keluar.filter(x=>x.grup==='kaos_lain'));
-  const totKeluar=umum+vendor+lain;
-  const saldo=sum(data.filter(x=>x.bulan<=bulan&&x.tipe==='masuk'))-sum(data.filter(x=>x.bulan<=bulan&&x.tipe==='keluar'));
-  $('#sSaldo').textContent=rp(saldo);$('#sMasuk').textContent=rp(masuk);$('#sKeluar').textContent=rp(totKeluar);
-  $('#sUmum').textContent=rp(umum);$('#sKaos').textContent=rp(vendor+lain);
-  const sisa=masuk-totKeluar;$('#sSisa').textContent=rp(sisa);$('#sSisa').className=sisa>=0?'g':'r';
-  const pct=masuk>0?Math.min(100,Math.round(totKeluar/masuk*100)):(totKeluar?100:0);$('#sBar').style.width=pct+'%';$('#sPct').textContent=masuk>0?pct+'% pemasukan terpakai':'Belum ada pemasukan bulan ini';
-  const f=filt;$('#lTrx').innerHTML=list(bln.filter(x=>!f||x.tipe===f));
-  // Rekap kaos
-  const kIn=bln.filter(x=>x.tipe==='masuk'&&x.grup==='kaos'), kMasuk=sum(kIn), laba=kMasuk-vendor-lain;
-  $('#kQty').textContent=kIn.reduce((t,x)=>t+Number(x.qty||0),0);$('#kMasuk').textContent=rp(kMasuk);
-  $('#kVendor').textContent=rp(vendor);$('#kLain').textContent=rp(lain);
-  $('#kLaba').textContent=rp(laba);$('#kLaba').className='big '+(laba>=0?'g':'r');
-  $('#lVendor').innerHTML=list(keluar.filter(x=>x.grup==='vendor'));
-  $('#lLain').innerHTML=list(keluar.filter(x=>x.grup==='kaos_lain'));
-  $('#lKaosIn').innerHTML=list(kIn);
-}
-function setMonth(m){bulan=m;$('#mIn').value=m;render()}
-const shift=d=>{let [y,m]=bulan.split('-').map(Number);m+=d;if(m<1){m=12;y--}if(m>12){m=1;y++}setMonth(y+'-'+String(m).padStart(2,'0'))};
-$('#mPrev').onclick=()=>shift(-1);$('#mNext').onclick=()=>shift(1);$('#mIn').onchange=e=>e.target.value&&setMonth(e.target.value);
-document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;
-  document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b));
-  $('#tTrx').classList.toggle('hide',tab!=='trx');$('#tKaos').classList.toggle('hide',tab!=='kaos')});
-
-// ── FORM TAMBAH / EDIT ────────────────
-const CHIPS={umum:['Iklan','Follower','Website','Packing'],vendor:['DP vendor','Pelunasan vendor'],kaos_lain:['Stiker','Label','Plastik','Packing'],kaos:['Penjualan kaos'],lain:['Lainnya']};
-function setTipe(t){$('#fTipe').value=t;document.querySelectorAll('#fSeg button').forEach(b=>b.classList.toggle('on',b.dataset.t===t))}
-function fillGrup(tipe,val){
-  const opt=tipe==='masuk'?[['kaos','Kaos'],['lain','Lainnya']]:[['umum','Umum (iklan, website, dll)'],['vendor','Kaos · Vendor'],['kaos_lain','Kaos · Perlengkapan lain']];
-  $('#fGrup').innerHTML=opt.map(([v,l])=>`<option value="${v}">${l}</option>`).join('');if(val)$('#fGrup').value=val;
-  $('#fQtyW').classList.toggle('hide',!(tipe==='masuk'&&$('#fGrup').value==='kaos'));
-  $('#fChips').innerHTML=(CHIPS[$('#fGrup').value]||[]).map(c=>`<button type="button" data-chip="${esc(c)}">${esc(c)}</button>`).join('');
-}
-function openForm(x,preGrup){
-  editing=x?.id||null;
-  const tipe=x?.tipe||(preGrup==='kaos'?'masuk':'keluar');
-  $('#fTitle').textContent=x?'Edit catatan':'Catat baru';setTipe(tipe);fillGrup(tipe,x?.grup||preGrup);
-  $('#fTgl').value=x?.tanggal||(bulan===today().slice(0,7)?today():bulan+'-01');
-  $('#fKet').value=x?.ket||'';$('#fNom').value=x?.nominal??'';$('#fQty').value=x?.qty??0;
-  $('#fDel').classList.toggle('hide',!x);$('#sheet').classList.add('on');
-  if(!x)setTimeout(()=>$('#fNom').focus(),60);
-}
-document.querySelectorAll('#fSeg button').forEach(b=>b.onclick=()=>{setTipe(b.dataset.t);fillGrup(b.dataset.t)});
-$('#fGrup').onchange=()=>fillGrup($('#fTipe').value,$('#fGrup').value);
-$('#fDel').onclick=async()=>{const id=editing;$('#sheet').classList.remove('on');await hapus(id)};
-$('#fCancel').onclick=()=>$('#sheet').classList.remove('on');
-$('#bAdd').onclick=()=>openForm(null,tab==='kaos'?'vendor':null);
-document.addEventListener('click',e=>{
-  const t=e.target.closest('[data-add],[data-edit],[data-del],[data-chip],[data-f],[data-go]');if(!t)return;
-  if(t.dataset.chip!==undefined){$('#fKet').value=t.dataset.chip;return}
-  if(t.dataset.f!==undefined){filt=t.dataset.f;document.querySelectorAll('[data-f]').forEach(b=>b.classList.toggle('on',b===t));render();return}
-  if(t.dataset.go)document.querySelector(`.tabs [data-tab="${t.dataset.go}"]`).click();
-  if(t.dataset.add)openForm(null,t.dataset.add);
-  if(t.dataset.edit)openForm(all.find(x=>x.id===t.dataset.edit));
-  if(t.dataset.del)hapus(t.dataset.del);
-});
-$('#fForm').onsubmit=async e=>{
-  e.preventDefault();
-  const old=all.find(x=>x.id===editing), tipe=$('#fTipe').value, grup=$('#fGrup').value, tgl=$('#fTgl').value;
-  const d={tipe,grup,tanggal:tgl,bulan:tgl.slice(0,7),ket:$('#fKet').value.trim(),nominal:Number($('#fNom').value||0),
-    qty:(tipe==='masuk'&&grup==='kaos')?Number($('#fQty').value||0):0,sumber:old?.sumber||'manual'};
-  if(old?.sumber==='auto'){d.edited=true;d.orderId=old.orderId}
-  try{
-    if(editing)await setDoc(doc(kDb,'transaksi',editing),{...d,createdAt:old?.createdAt||Date.now()});
-    else await addDoc(collection(kDb,'transaksi'),{...d,createdAt:Date.now()});
-    $('#sheet').classList.remove('on');setMonth(d.bulan);toast('Tersimpan');
-  }catch(x){toast('Gagal simpan: '+(x.code||x.message))}
-};
-async function hapus(id){
-  const x=all.find(i=>i.id===id);if(!x||!confirm('Hapus "'+x.ket+'"?'))return;
-  try{
-    if(x.sumber==='auto')await setDoc(doc(kDb,'transaksi',id),{deleted:true,sumber:'auto',bulan:x.bulan,tipe:x.tipe,nominal:0}); // tanda agar tidak ditarik ulang
-    else await deleteDoc(doc(kDb,'transaksi',id));
-    toast('Dihapus');
-  }catch(e){toast('Gagal hapus: '+(e.code||e.message))}
-}
-</script>
+<script type="module" src="app.js?v=3"></script>
 </body>
 </html>
