@@ -62,6 +62,11 @@ async function sync(silent){
         ket:nama+(o.kodePelunasan?' ('+o.kodePelunasan+')':'')+(st==='dp'?' · DP':''),nominal:nom,qty,sumber:'auto',orderId:d.id,createdAt:old?.createdAt||Date.now()}));
       n++;
     }
+    // Bersihkan transaksi otomatis yang order-nya sudah dihapus dari admin
+    const live=new Set(snap.docs.map(d=>'order_'+d.id));
+    for(const x of all){
+      if(String(x.id).startsWith('order_')&&!live.has(x.id)){jobs.push(deleteDoc(doc(kDb,'transaksi',x.id)));n++}
+    }
     await Promise.all(jobs);
     if(!silent||n)toast(n?`${n} order disinkronkan`:'Sudah paling baru');
   }catch(e){toast('Gagal tarik order: '+(e.code||e.message))}finally{document.querySelectorAll('.syncIc').forEach(e=>e.classList.remove('spin'))}
